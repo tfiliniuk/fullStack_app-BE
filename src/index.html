@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>File Upload</title>
+</head>
+<body>
+  <form action="/uploadfile" enctype="multipart/form-data" method="POST">
+    <input type="file" name="myFile">
+    <input type="submit" value="Upload File">
+
+  </form>
+  <form action="/uploadmultiple" enctype="multipart/form-data" method="POST">
+    <input type="file" name="myFiles" multiple>
+    <input type="submit" value="Upload Files">
+
+  </form>
+  <form action="/uploadphoto" enctype="multipart/form-data" method="POST">
+    <input type="file" name="profileImg" accept="image/*">
+    <input type="submit" value="Upload Photo">
+  </form>
+  <div>
+    <p>
+      Socket work
+      <span id="test"></span>
+    </p>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io.connect("http://localhost:3004", {'reconnectionDelay': 10});
+    socket.on("news", (data) => {
+      document.getElementById("test").innerText = data.hello
+      console.log(data)
+    });
+    socket.emit("my other event", {my: "data"})
+  </script>
+</body>
+</html>
